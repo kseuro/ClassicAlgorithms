@@ -5,9 +5,10 @@ A collection of classic computer science algorithms implemented in pure [Mojo](h
 ## Sorting
 
 - [Bubble sort](https://en.wikipedia.org/wiki/Bubble_sort)
-  - [ X ] Implemented
-  - [ X ] Tested
-  - [ X ] Benchmarked
+  - [X] Implemented
+  - [X] Tested
+  - [X] Benchmarked
+  - [ ] Parallelized
 - Quicksort
 - Merge sort
 
