@@ -63,6 +63,27 @@ fn bubble_sort(test_list: TestList) -> List[Int]:
     return list_to_sort
 
 
+fn verify_behaviour[
+    func: fn (TestList) -> List[Int], size: Int, name: String
+](np: PythonObject) raises:
+    """Verifies that the sorting algorithm performs as expected."""
+    var test_list = generate_TestList(np, size)
+    var result = func(test_list)
+
+    # If the list is correctly sorted, then the vector difference
+    # followed by sum should be zero, no matter the starting list.
+    var x = SIMD[DType.int8, size]()
+    var y = SIMD[DType.int8, size]()
+    for i in range(size):
+        x[i] = test_list.sorted[i]
+        y[i] = result[i]
+    var z = (x - y).reduce_add()
+    if z == 0:
+        print(name, " correctly sorted the list.")
+    else:
+        print(name, " did not correctly sort the list.")
+
+
 @always_inline
 fn bench[
     func: fn (TestList) -> List[Int]
@@ -87,5 +108,11 @@ fn bench[
 fn main() raises -> None:
     print("Running Bubble Sort")
     var np: PythonObject = import_numpy()
-    bench[bubble_sort](np, size=1000, name="bubble_sort")
-    bench[bubble_sort](np, size=10000, name="bubble_sort")
+
+    # Basic bubble sort algorithm
+    verify_behaviour[bubble_sort, 64, "bubble_sort"](np)
+    for size in range(10000, 50000, 15000):
+        bench[bubble_sort](np, size=size, name="bubble_sort")
+
+    # Parallelized bubble sort algorithm
+    # TODO
