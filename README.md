@@ -8,7 +8,10 @@ A collection of classic computer science algorithms implemented in pure [Mojo](h
   - [X] Implemented
   - [X] Tested
   - [X] Benchmarked
-  - [ ] Parallelized
+  - [ ] [Cocktail Shaker Sorter](https://en.wikipedia.org/wiki/Cocktail_shaker_sort)
+    - [X] Implemented
+    - [X] Tested
+    - [X] Benchmarked
 - Quicksort
 - Merge sort
 
