@@ -7,14 +7,17 @@ one at a time, compares each one, and performs a swap operation if needed.
 import benchmark
 from python import Python
 
+alias type = Int
+
 
 struct TestList:
-    """Defines two lists of ints - the list to sort and the list to check against."""
+    """Defines two lists of ints - the list to sort and the list to check against.
+    """
 
-    var unsorted: List[Int]
-    var sorted: List[Int]
+    var unsorted: List[type]
+    var sorted: List[type]
 
-    fn __init__(inout self, unsorted: List[Int], sorted: List[Int]):
+    fn __init__(inout self, unsorted: List[type], sorted: List[type]):
         self.unsorted = unsorted
         self.sorted = sorted
 
@@ -25,13 +28,13 @@ fn generate_TestList(np: PythonObject, size: Int) raises -> TestList:
     var sorted_np = np.sort(unsorted_np)
 
     # Convert the PythonObjects to Mojo lists
-    var unsorted = List[Int]()
-    var sorted = List[Int]()
+    var unsorted = List[type]()
+    var sorted = List[type]()
 
     for item in unsorted_np:
-        unsorted.append(item.to_float64().to_int())
+        unsorted.append(int(item))
     for item in sorted_np:
-        sorted.append(item.to_float64().to_int())
+        sorted.append(int(item))
 
     return TestList(unsorted, sorted)
 
@@ -48,13 +51,13 @@ def import_numpy() -> PythonObject:
     return np
 
 
-fn swap(inout l: List[Int], borrowed i: Int):
+fn swap(inout l: List[type], borrowed i: Int):
     var tmp = l[i]
     l[i] = l[i + 1]
     l[i + 1] = tmp
 
 
-fn bubble_sort(test_list: TestList) -> List[Int]:
+fn bubble_sort(test_list: TestList) -> List[type]:
     """Runs the bubble sort algorithm on a TestList struct."""
     var list_to_sort = test_list.unsorted
     var swapped: Bool = True
@@ -67,7 +70,7 @@ fn bubble_sort(test_list: TestList) -> List[Int]:
     return list_to_sort
 
 
-fn cocktail_shaker_sort(test_list: TestList) -> List[Int]:
+fn cocktail_shaker_sort(test_list: TestList) -> List[type]:
     """Runs the cocktail shaker sort algorithm on a TestList struct."""
     var list_to_sort = test_list.unsorted
     var swapped: Bool = True
@@ -89,11 +92,10 @@ fn cocktail_shaker_sort(test_list: TestList) -> List[Int]:
 
 
 fn verify_behaviour[
-    func: fn (TestList) -> List[Int], size: Int, name: String
+    func: fn (TestList) -> List[type], size: Int, name: String
 ](np: PythonObject) raises:
     """Verifies that the sorting algorithm performs as expected."""
-    print(name, "...verifying behaviour.")
-    # print("...verifying behaviour.", name) # ! This is a compiler error -- report this!
+    print("...verifying behaviour:", name)
 
     var test_list = generate_TestList(np, size)
     var result = func(test_list)
@@ -110,11 +112,12 @@ fn verify_behaviour[
         print(name, " correctly sorted the test list.")
     else:
         print(name, " did not correctly sort the test list.")
+        print("z:", z)
 
 
 @always_inline
 fn bench[
-    func: fn (TestList) -> List[Int]
+    func: fn (TestList) -> List[type]
 ](np: PythonObject, size: Int, name: String) raises:
     """Benchmarking function."""
     # Setup everything required to run the sorting algorithm
@@ -129,7 +132,9 @@ fn bench[
 
     var py = Python.import_module("builtins")
     _ = py.print(
-        py.str("{:<13} Size: {:>2} {:>9.5f} Seconds").format(name, size, seconds)
+        py.str("{:<13} Size: {:>2} {:>9.5f} Seconds").format(
+            name, size, seconds
+        )
     )
 
 
