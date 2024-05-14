@@ -8,14 +8,27 @@ A collection of classic computer science algorithms implemented in pure [Mojo](h
   - [X] Implemented
   - [X] Tested
   - [X] Benchmarked
-  - [ ] [Cocktail Shaker Sorter](https://en.wikipedia.org/wiki/Cocktail_shaker_sort)
-    - [X] Implemented
-    - [X] Tested
-    - [X] Benchmarked
+
+- [Cocktail Shaker Sorter](https://en.wikipedia.org/wiki/Cocktail_shaker_sort)
+  - [X] Implemented
+  - [X] Tested
+  - [X] Benchmarked
+
 - Quicksort
+
 - Merge sort
 
 ## Searching
 
 - Linear search
 - Binary search
+
+## Gradient Descent
+
+- [Rosenbrock Function](https://en.wikipedia.org/wiki/Rosenbrock_function)
+  - Note: Due to relative path importing, call the optimization function from within the containing folder like:
+
+    ```bash
+    cd gradient_descent/rosenbrock
+    mojo optimize.mojo
+    ```
