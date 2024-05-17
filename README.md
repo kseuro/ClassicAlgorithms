@@ -14,7 +14,10 @@ A collection of classic computer science algorithms implemented in pure [Mojo](h
   - [X] Tested
   - [X] Benchmarked
 
-- Quicksort
+- [Quicksort](https://en.wikipedia.org/wiki/Quicksort)
+  - [ ] Implemented
+  - [ ] Tested
+  - [ ] Benchmarked
 
 - Merge sort
 
