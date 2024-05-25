@@ -20,6 +20,8 @@ A collection of classic computer science algorithms implemented in pure [Mojo](h
   - [ ] Benchmarked - Memory error when benchmarking.
 
 - Merge sort
+  - [X] Implemented
+  - [ ] Tested
 
 ## Searching
 
