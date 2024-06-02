@@ -1,0 +1,37 @@
+"""
+An implementation of k-means clustering in Mojo 🔥 from the Modular blog:
+https://www.modular.com/blog/fast-k-means-clustering-in-mojo-guide-to-porting-python-to-mojo-for-accelerated-k-means-clustering
+
+"""
+from matrix import Matrix
+
+
+struct Kmeans[dtype: DType = DType.float64]():
+    fn __init__(inout self):
+        ...
+
+    # Calculate the squared Euclidean distance from each data point to each centroid
+    fn distance_norm(
+        self, data: Matrix[dtype], inout centroids_distances: Matrix[dtype]
+    ):
+        ...
+
+    # Init centroids using k-means++ algo
+    fn _kmeans_plus_plus(inout self, data: Matrix[dtype]) raises:
+        ...
+
+    # Lloyd's algorithm
+    fn _lloyds_iteration(
+        inout self,
+        data: Matrix[dtype],
+        inout centroids_distances: Matrix[dtype],
+    ) raises:
+        ...
+
+    # Main method to fit k-means model to data
+    fn fit(inout self, data: Matrix[dtype]) raises -> List[Matrix[dtype]]:
+        return List(data)
+
+
+fn main() raises -> None:
+    ...
