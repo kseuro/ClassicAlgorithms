@@ -83,9 +83,8 @@ def verify_behaviour() -> None:
 
 fn main() raises -> None:
     """Driver function."""
-    # print("Running merge sort on arrays of increasing size")
+    print("Benchmarking Merge Sort")
     verify_behaviour()
-    bench[merge_sort, 1000]()
+    bench[merge_sort, 10_000]()
     bench[merge_sort, 100_000]()
     bench[merge_sort, 1_000_000]()
-    bench[merge_sort, 10_000_000]()
