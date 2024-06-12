@@ -5,44 +5,87 @@ has O(nlogn) runtime in the best, worst, and average case, which
 makes it good for use with very large datasets.
 """
 
+import benchmark
+from python import Python
+from random import random_si64
+
 
 fn print_list(l: List[Int]) -> None:
     print("")
     for i in range(len(l)):
-        print(l[i])
+        print(l[i], end=" ")
     print("")
 
 
+fn merge_sort(inout unsorted_array: List[Int]):
+    if len(unsorted_array) > 1:
+        # Get the middle and divide the array
+        var middle = int(len(unsorted_array) / 2)
+        var left = unsorted_array[:middle]
+        var right = unsorted_array[middle:]
+
+        merge_sort(left)
+        merge_sort(right)
+
+        var i = 0
+        var j = 0
+        var k = 0
+
+        while i < len(left) and j < len(right):
+            if left[i] < right[j]:
+                unsorted_array[k] = left[i]
+                i += 1
+            else:
+                unsorted_array[k] = right[j]
+                j += 1
+            k += 1
+
+        while i < len(left):
+            unsorted_array[k] = left[i]
+            i += 1
+            k += 1
+
+        while j < len(right):
+            unsorted_array[k] = right[j]
+            j += 1
+            k += 1
+
+
+@always_inline
+fn bench[func: fn (inout List[Int]) -> None, size: Int]() raises:
+    """Benchmarking function."""
+
+    var target_array = List[Int]()
+    for _ in range(size):
+        target_array.append(int(random_si64(0, size)))
+
+    @always_inline
+    @parameter
+    fn test_fn():
+        func(target_array)
+
+    var seconds = benchmark.run[test_fn](max_runtime_secs=10).mean()
+
+    var py = Python.import_module("builtins")
+    _ = py.print(
+        py.str("{:<13} {:>2} elements in {:>9.5f} Seconds").format(
+            "Sorted:", len(target_array), seconds
+        )
+    )
+
+
+def verify_behaviour() -> None:
+    var test_array = List[Int](70, 50, 30, 10, 20, 40, 60)
+    merge_sort(test_array)
+    print("Results of sorting test array:")
+    print_list(test_array)
+
+
 fn main() raises -> None:
-    var odd = List[Int](1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21)
-    var even = List[Int](2, 4, 6, 8, 10)
-    var result = List[Int]()
-
-    var o = 0  # pointer to values in the odd list
-    var e = 0  # pointer to values in the even list
-
-    print("Starting")
-    while o < len(odd) and e < len(even):
-        while odd[o] < even[e] and o < len(odd):
-            print("o", o)
-            result.append(odd[o])
-            o += 1
-        while even[e] < odd[o] and e < len(even):
-            print("e", e)
-            result.append(even[e])
-            e += 1
-
-    if o < len(odd):
-        print("Appending remaining odd items")
-        while o < len(odd):
-            result.append(odd[o])
-            o += 1
-
-    if e < len(even):
-        print("Appending remaining even items")
-        while e < len(even):
-            result.append(even[e])
-            e += 1
-
-    print("Result")
-    print_list(result)
+    """Driver function."""
+    # print("Running merge sort on arrays of increasing size")
+    verify_behaviour()
+    bench[merge_sort, 1000]()
+    bench[merge_sort, 100_000]()
+    bench[merge_sort, 1_000_000]()
+    bench[merge_sort, 10_000_000]()
