@@ -21,7 +21,8 @@ A collection of classic computer science algorithms implemented in pure [Mojo](h
 
 - Merge sort
   - [X] Implemented
-  - [ ] Tested
+  - [X] Tested
+  - [ ] Benchmarked
 
 ## Searching
 
