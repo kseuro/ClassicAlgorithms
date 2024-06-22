@@ -66,6 +66,9 @@ def benchmark(size: int):
     seconds = timeit(lambda: merge_sort(array), number=2)
     print(f"{size} elements in {seconds:.5f} Seconds")
 
+    gflops = ((2 * size) / seconds) / 1e9
+    print(f"{gflops:.5f} GFLOPS")
+
 
 def verify_behaviour():
     array = [70, 50, 30, 10, 20, 40, 60]

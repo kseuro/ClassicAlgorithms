@@ -52,7 +52,9 @@ fn merge_sort(inout unsorted_array: List[Int]):
 
 
 @always_inline
-fn bench[func: fn (inout List[Int]) -> None, size: Int]() raises:
+fn bench[
+    func: fn (inout List[Int]) -> None, size: Int, python_gflops: Float32
+]() raises:
     """Benchmarking function."""
 
     var target_array = List[Int]()
@@ -65,13 +67,15 @@ fn bench[func: fn (inout List[Int]) -> None, size: Int]() raises:
         func(target_array)
 
     var seconds = benchmark.run[test_fn](max_runtime_secs=10).mean()
-
+    var gflops = ((2 * size) / seconds) / 1e9
     var py = Python.import_module("builtins")
     _ = py.print(
-        py.str("{:<13} {:>2} elements in {:>9.5f} Seconds").format(
-            "Sorted:", len(target_array), seconds
+        py.str("{} {} elements in {:.5f} Seconds at {:>.5f} GFlops").format(
+            "Sorted:", len(target_array), seconds, gflops
         )
     )
+    var speedup: Float32 = gflops / python_gflops
+    _ = py.print(py.str("Speedup: {:.5f}x faster than Python").format(speedup))
 
 
 def verify_behaviour() -> None:
@@ -85,6 +89,7 @@ fn main() raises -> None:
     """Driver function."""
     print("Benchmarking Merge Sort")
     verify_behaviour()
-    bench[merge_sort, 10_000]()
-    bench[merge_sort, 100_000]()
-    bench[merge_sort, 1_000_000]()
+
+    bench[merge_sort, 10_000, 0.00041]()
+    bench[merge_sort, 100_000, 0.00035]()
+    bench[merge_sort, 1_000_000, 0.00030]()
