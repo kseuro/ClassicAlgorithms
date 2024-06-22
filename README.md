@@ -19,10 +19,10 @@ A collection of classic computer science algorithms implemented in pure [Mojo](h
   - [X] Tested
   - [ ] Benchmarked - Memory error when benchmarking.
 
-- Merge sort
+- [Merge sort](https://en.wikipedia.org/wiki/Merge_sort)
   - [X] Implemented
   - [X] Tested
-  - [ ] Benchmarked
+  - [X] Benchmarked
 
 ## Searching
 
@@ -38,3 +38,10 @@ A collection of classic computer science algorithms implemented in pure [Mojo](h
     cd gradient_descent/rosenbrock
     mojo optimize.mojo
     ```
+
+## Matrix Multiplication
+
+- [MatMul in Mojo](https://docs.modular.com/mojo/notebooks/Matmul) using vectorization, tiling, and parallelization.
+  - [ ] Implemented
+  - [ ] Tested
+  - [ ] Benchmarked
