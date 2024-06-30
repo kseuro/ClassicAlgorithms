@@ -40,6 +40,6 @@ def benchmark_matmul_python(M: int, N: int, K: int) -> float:
     print(f"{M}x{N}x{K} matrix multiplication took {seconds:.5f} seconds")
 
     gflops = ((M * N * K) / seconds) / 1e9
-    print(f"{gflops:.5f} GFLOPS")
+    print(f"{gflops:.5f} GFLOPS\n")
 
     return gflops
