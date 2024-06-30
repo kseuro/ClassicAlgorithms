@@ -42,6 +42,6 @@ A collection of classic computer science algorithms implemented in pure [Mojo](h
 ## Matrix Multiplication
 
 - [MatMul in Mojo](https://docs.modular.com/mojo/notebooks/Matmul) using vectorization, tiling, and parallelization.
-  - [ ] Implemented
-  - [ ] Tested
-  - [ ] Benchmarked
+  - [X] Implemented
+  - [X] Tested
+  - [X] Benchmarked
