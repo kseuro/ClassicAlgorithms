@@ -42,3 +42,8 @@ A collection of classic computer science algorithms implemented in pure [Mojo](h
   - [X] Implemented
   - [X] Tested
   - [X] Benchmarked
+
+- [Matrix Chain Multiplication](https://en.wikipedia.org/wiki/Matrix_chain_multiplication)
+  - [ ] Implemented
+  - [ ] Tested
+  - [ ] Benchmarked
