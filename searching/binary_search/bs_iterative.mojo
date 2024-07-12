@@ -2,11 +2,14 @@
 
 from pathlib import Path
 from python import Python
+from benchmarking import verify_behaviour, bench
 
-alias max_length = 1000
+alias max_length = 10_000_000
+alias n_keys = 10
+alias name = "Iterative BinSearch"
 
 
-fn BinSearch(arr: List[Int], key: Int) -> Int:
+fn BinSearch(inout arr: List[Int], key: Int) -> Int:
     """Performs a binary search on the given sorted array for the given key.
 
     Args:
@@ -17,7 +20,7 @@ fn BinSearch(arr: List[Int], key: Int) -> Int:
         Int: The index of the key in the array if found, otherwise -1.
     """
 
-    var low = 1
+    var low = 0
     var high = len(arr)
 
     while low <= high:
@@ -34,22 +37,22 @@ fn BinSearch(arr: List[Int], key: Int) -> Int:
 
 
 fn main() raises -> None:
+    verify_behaviour[BinSearch, name]()
+
     var arr = List[Int]()
     for i in range(max_length):
         arr.append(i)
 
+    # Get n random keys to search for in the sorted array
     var np = Python.import_module("numpy")
-    var np_keys = np.random.randint(0, max_length, 10)
-    var mojo_keys = List[Int]()
+    var np_keys = np.random.randint(0, max_length, n_keys)
+    var keys = List[Int]()
     for i in range(len(np_keys)):
-        mojo_keys.append(np_keys[i])
+        keys.append(np_keys[i])
 
-    # Append keys that are not in the index
-    mojo_keys.append(12000)
-    mojo_keys.append(-10)
+    # Test cases: append keys that will not be in the sorted list
+    keys.append(12000)  # Some very large value
+    keys.append(-10)  # Some negative value
 
-    print("Searching array for: ")
-    for key in mojo_keys:
-        print("Key: ", key[])
-        var index = BinSearch(arr, key[])
-        print("Index: ", index)
+    for key in keys:
+        bench[BinSearch](arr, key[], name)
