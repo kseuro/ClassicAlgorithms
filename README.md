@@ -30,7 +30,7 @@ A collection of classic computer science algorithms implemented in pure [Mojo](h
   - Iterative
     - [X] Implemented
     - [X] Tested
-    - [ ] Benchmarked
+    - [X] Benchmarked
   - Recursive
     - [ ] Implemented
     - [ ] Tested
