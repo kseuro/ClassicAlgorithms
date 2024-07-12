@@ -17,7 +17,7 @@ A collection of classic computer science algorithms implemented in pure [Mojo](h
 - [Quicksort](https://en.wikipedia.org/wiki/Quicksort)
   - [X] Implemented
   - [X] Tested
-  - [ ] Benchmarked - Memory error when benchmarking.
+  - [X] Benchmarked
 
 - [Merge sort](https://en.wikipedia.org/wiki/Merge_sort)
   - [X] Implemented

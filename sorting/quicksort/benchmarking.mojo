@@ -11,14 +11,7 @@ alias type = Int
 @always_inline
 fn bench[
     func: fn (inout List[Int], Int, Int) -> None
-](
-    np: PythonObject,
-    inout unsorted_list: List[Int],
-    sorted_ref: List[Int],
-    name: String,
-    start: Int,
-    end: Int,
-) raises:
+](inout unsorted_list: List[Int], name: String, start: Int, end: Int,) raises:
     """Benchmarking function."""
     # Setup everything required to run the sorting algorithm
     print("Benchmarking")
@@ -26,7 +19,7 @@ fn bench[
     @always_inline
     @parameter
     fn test_fn():
-        var result = func(unsorted_list, start, end)
+        _ = func(unsorted_list, start, end)
 
     var seconds = benchmark.run[test_fn](max_runtime_secs=10).mean()
 
@@ -39,15 +32,15 @@ fn bench[
 
 
 fn verify_behaviour[
-    func: fn (inout List[Int], Int, Int) raises -> None,
+    func: fn (inout List[Int], Int, Int) -> None,
     size: Int,
     name: String,
-](np: PythonObject) raises:
+]() raises:
     """Verifies that the sorting algorithm performs as expected."""
     print("...verifying behaviour:", name)
 
-    var array = List(10, 16, 8, 12, 15, 6, 3, 9)
-    var sorted = List(3, 6, 8, 9, 10, 12, 15, 16)
+    var array = List(10, 16, 17, 8, 12, 17, 15, 6, 3, 9, 19, 234)
+    var sorted = List(3, 6, 8, 9, 10, 12, 15, 16, 17, 17, 19, 234)
     func(array, 0, len(array) - 1)
 
     # If the list is correctly sorted, then the vector difference

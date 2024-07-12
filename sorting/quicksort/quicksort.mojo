@@ -10,6 +10,10 @@ from benchmarking import verify_behaviour, bench
 from test_list import TestList, generate_TestList
 
 alias type = Int
+alias max_len = 100
+alias max_size = 10_000
+alias step_size = 1000
+alias start_size = 1000
 
 
 fn swap(inout arr: List[Int], borrowed i: Int, borrowed j: Int) -> None:
@@ -34,7 +38,7 @@ fn partition(inout array: List[Int], start: Int, end: Int) -> Int:
     return j
 
 
-fn quicksort(inout array: List[type], start: Int, end: Int) raises -> None:
+fn quicksort(inout array: List[type], start: Int, end: Int) -> None:
     if len(array[start:end]) < 2:
         return
     if start < end:
@@ -49,6 +53,12 @@ fn quicksort(inout array: List[type], start: Int, end: Int) raises -> None:
 
 fn main() raises -> None:
     print("Running Quicksort")
+    verify_behaviour[quicksort, 8, "quicksort"]()
 
-    var np: PythonObject = import_numpy()
-    verify_behaviour[quicksort, 8, "quicksort"](np)
+    var np = Python.import_module("numpy")
+    for size in range(start_size, max_size, step_size):
+        var list = np.random.randint(0, max_len, size)
+        var mojo_list = List[Int]()
+        for i in range(len(list)):
+            mojo_list.append(list[i])
+        bench[quicksort](mojo_list, "random_ints", 0, len(mojo_list))
