@@ -28,6 +28,7 @@ A collection of classic computer science algorithms implemented in pure [Mojo](h
 
 - [Binary search](https://en.wikipedia.org/wiki/Binary_search)
   - Iterative
+    - TODO: Use `random_si64()` like in merge sort to remove dependence on Numpy
     - [X] Implemented
     - [X] Tested
     - [X] Benchmarked
