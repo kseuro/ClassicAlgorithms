@@ -26,8 +26,15 @@ A collection of classic computer science algorithms implemented in pure [Mojo](h
 
 ## Searching
 
-- Linear search
-- Binary search
+- [Binary search](https://en.wikipedia.org/wiki/Binary_search)
+  - Iterative
+    - [X] Implemented
+    - [X] Tested
+    - [ ] Benchmarked
+  - Recursive
+    - [ ] Implemented
+    - [ ] Tested
+    - [ ] Benchmarked
 
 ## Matrix Multiplication
 
